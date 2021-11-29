@@ -21,66 +21,66 @@ import org.openqa.selenium.support.ui.WebDriverWait;
  */
 public class AppTest
 {
-	WebDriver driver; 
-	WebDriverWait wait; 
-	String url = "http://localhost";
+	WebDriver driver;
+	WebDriverWait wait;
+	String url = "http://10.0.2.15";
 	String validEmail = "user@example.com";
 	String validPassword = "password1234";
 	String invalidEmail = "none@example.com";
 	String invalidPassword = "password";
 
     @Before
-    public void setUp() { 
-		driver = new HtmlUnitDriver(); 
-		wait = new WebDriverWait(driver, 10); 
-	} 
+    public void setUp() {
+		driver = new HtmlUnitDriver();
+		wait = new WebDriverWait(driver, 10);
+	}
 
 	@After
-    public void tearDown() { 
-		driver.quit(); 
-	}	 
-	
+    public void tearDown() {
+		driver.quit();
+	}
+
     @Test
-    public void testLoginWithValidEmailValidPassword() 
-		throws InterruptedException { 
+    public void testLoginWithValidEmailValidPassword()
+		throws InterruptedException {
 
 		//get web page
 		driver.get(url);
 		//wait until page is loaded or timeout error
-		wait.until(ExpectedConditions.titleContains("Login Page |")); 
+		wait.until(ExpectedConditions.titleContains("Login Page |"));
 
 		//enter input
 		driver.findElement(By.name("email")).sendKeys(validEmail);
 		driver.findElement(By.name("password")).sendKeys(validPassword);
 		//click submit
 		driver.findElement(By.name("submit")).submit();
-	
-		//check result 
-		String expectedResult = "Dashboard |"; 
-		boolean isResultCorrect = wait.until(ExpectedConditions.titleContains(expectedResult)); 
-		assertTrue(isResultCorrect == true); 
+
+		//check result
+		String expectedResult = "Dashboard |";
+		boolean isResultCorrect = wait.until(ExpectedConditions.titleContains(expectedResult));
+		assertTrue(isResultCorrect == true);
 	}
-		
+
 	@Test
-    public void testLoginWithValidEmailInvalidPassword() 
-		throws InterruptedException { 
+    public void testLoginWithValidEmailInvalidPassword()
+		throws InterruptedException {
 
 		//get web page
 		driver.get(url);
 		//wait until page is loaded or timeout error
-		wait.until(ExpectedConditions.titleContains("Login Page |")); 
+		wait.until(ExpectedConditions.titleContains("Login Page |"));
 
 		//enter input
 		driver.findElement(By.name("email")).sendKeys(validEmail);
 		driver.findElement(By.name("password")).sendKeys(invalidPassword);
 		//click submit
 		driver.findElement(By.name("submit")).submit();
-	
+
 		//check result
 		By errorMsgId = By.className("error-msg");
-		String expectedResult = "Login failed"; 
-		boolean isResultCorrect = wait.until(ExpectedConditions.textToBe(errorMsgId, expectedResult)); 
-		assertTrue(isResultCorrect == true); 
+		String expectedResult = "Login failed";
+		boolean isResultCorrect = wait.until(ExpectedConditions.textToBe(errorMsgId, expectedResult));
+		assertTrue(isResultCorrect == true);
 	}
 
 }
